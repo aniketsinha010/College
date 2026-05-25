@@ -1,0 +1,236 @@
+
+NOTE : Questions that are not in Leetcode are solved here. Leetcode questions are in 'Leetcode' folder.
+Extra Questions are marked here as 'EQ'.
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 1 : Breadth First Search (Level Order Traversal) :
+
+BFS is a graph / tree traversal algorithm that explores nodes level by level.
+It can be implemented using a queue.
+
+When to use BFS :
+1. When answer lies near the root node.
+2. When asked to search by level.
+
+Leetcode : 102,673,107
+
+Algorithm :
+1. create a queue and add the root node to it.
+2. While the queue is not empty:
+   - Compute the size of the queue → this represents the number of nodes in the current level.
+   - Process exactly those many nodes:
+       - Remove a node from the queue.
+       - Visit / store its value.
+       - If the node has a left child → push it into the queue.
+       - If the node has a right child → push it into the queue.
+3. Continue until the queue becomes empty.
+
+Extra Questions :
+EQ1 :  Find the level Order Successor of a Node.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 2 : Zigzag Level Order Traversal :
+
+Leetcode : 103
+
+How to solve : Can be solved in 2 ways.
+Simple Solution, exactly similar to Leetcode102, just extra maintain a 'leftToRight' boolean variable. After each
+level just flip it and add the list of nodes of that level by reversing it to 'result' list of list.
+
+1. Maintain a boolean: leftToRight
+2. After each level:
+    - if leftToRight == false → reverse the list
+3. Flip the boolean after every level.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 3 : Populating Next Right Pointers in Each Node :
+
+Leetcode : 116
+
+Could have been solved by applying BFS using Queue which would take O(n) space complexity. Because the tree is perfect
+(every node has 2 children and all leaves are at the same level), we can solve it efficiently in O(1) extra space.
+Very Simple solution, just draw the tree and visualise. See chatgpt for code explanation if required.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 4 : Binary Tree Right Side View :
+
+Leetcode : 199
+
+Vey Simple. Do level order traversal. At each level add the last node to the resultant list.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 5 : Cousins in Binary Tree :
+Cousins means that the two nodes are on the same level but must have different parent.
+
+Leetcode : 993
+
+Algorithm (Cousins in Binary Tree using BFS):
+1. If root is null → return false.
+2. Create a queue and push root.
+3. While queue is not empty:
+   a) Let levelSize = queue size.
+   b) Set parentX = null, parentY = null.
+   c) Repeat levelSize times:
+      i) Pop current node.
+      ii) If current.left exists:
+          - push current.left
+          - if current.left.val == x → parentX = current
+          - if current.left.val == y → parentY = current
+      iii) If current.right exists:
+          - push current.right
+          - if current.right.val == x → parentX = current
+          - if current.right.val == y → parentY = current
+   d) If parentX != null and parentY != null:
+          - return (parentX != parentY)
+   e) If exactly one of parentX or parentY found:
+          - return false
+4. Return false.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 6 : Symmetric Tree (Not very Clear...See Again)
+
+Leetcode : 101
+
+Mirror means: (Draw tree for better visualisation)
+    - Left child of left subtree == Right child of right subtree
+    - Right child of left subtree == Left child of right subtree
+
+'isMirror' Method : Base Cases (Stopping Conditions) :
+- If both nodes are null, we've reached the end of both branches simultaneously. This is symmetric. Return true.
+- One is null, one isn't: If one side has a node but the other doesn't, the tree is lopsided. Return false.
+
+If both nodes exist, three things must be true for them to be mirrors:
+- Values match: left.val == right.val.
+- Outer branches match: The far-left of the left subtree must match the far-right of the right subtree :
+  (isMirror(left.left, right.right)).
+- Inner branches match: The inner-right of the left subtree must match the inner-left of the right subtree :
+  (isMirror(left.right, right.left)).
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 7 : Depth of Binary Tree
+
+Leetcode : 104
+
+Simple. Already learnt to calculate height of a tree.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 8 : Depth First Search
+
+Leetcode : 543
+
+The diameter is the longest path between any two nodes in the tree.
+Important: the path may or may not pass through the root.
+
+💡 Key Idea
+At every node, think about two things:
+- Height of the left subtree
+- Height of the right subtree
+If a path goes through this node, its length is: (left height) + (right height)
+So: While computing height, we also update the maximum diameter seen so far.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 9 : Invert Binary Tree
+
+Leetcode : 226
+
+Very Simple. Solved by myself at first go. Just interchange the left and right child node and then repeat this
+recursively for further child nodes.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 10 : Convert Sorted Array to Binary Search Tree
+
+Leetcode : 108
+
+At first it might seem complex as in insertion in case of AVL trees and then balancing using rotations. But as the
+array is already sorted, there is no need of going to that route.
+
+Simply find the middle element and build the tree around it. Do the same recursively for each subtree.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 11 : Convert Sorted List to Binary Search Tree (See Again)
+
+Leetcode : 109
+
+More complex than the previous one.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 12 : Flatten binary tree to linked list
+
+Leetcode : 114
+
+Could have been solved using a List but it would have space Complexity of O(n).
+So this soln has space Complexity of O(1) :
+For each currentNode look for the rightmost node in the left subtree of that currentNode and attach the right subtree
+of the currentNode to the rightmost node of the left subtree and then make the entire left subtree a right subtree and
+make the left null.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 13 : Validate Binary Search Tree (Not Clear...must see)
+draw and try to visualise...
+
+Leetcode : 98
+
+A tree is a valid BST if:
+- everything in the left subtree is < node.val
+- everything in the right subtree is > node.val
+- this must hold for the whole subtree, not only direct children
+
+💡 Big idea behind the solution :
+We give every node a range of allowed values : (min , max)
+At every step we ask:
+“Is this node’s value inside its allowed range?”
+Then we pass updated ranges to its children.
+
+We check min != null / max != null because:
+- null means “there is no boundary yet.”
+- And if we don’t check, Java would try to compare against null and crash with a NullPointerException.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 14 : Lowest Common Ancestor of a Binary Tree (Not Clear)
+
+Leetcode : 236
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
